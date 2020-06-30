@@ -99,12 +99,4 @@ a {
   background-color: #f8f8f8;
   padding: 0 10px;
 }
-.tooltip {
-  position: relative;
-}
-.tooltip:hover:after {
-  position: absolute;
-  bottom: ;
-  content: attr(title);
-}
 </style>
