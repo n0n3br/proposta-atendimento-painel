@@ -1,100 +1,75 @@
 <template>
-    <Fragment>
-        <div class="text-right">
-            <v-switch
-                :label="labelSwitch"
-                v-model="tipoSoma"
-                hide-details
-                class="py-0 my-0"
-            ></v-switch>
-        </div>
-        <div>
-            <v-list class="d-flex" two-line>
-                <v-list-item
-                    class="col-3"
-                    v-for="item in resumo"
-                    :key="item.valor"
-                >
-                    <v-list-item-avatar>
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                                <v-icon v-on="on">{{ item.icone }}</v-icon>
-                            </template>
-                            <span>{{ item.texto }}</span>
-                        </v-tooltip>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                        <v-list-item-title>
+    <v-list class="d-flex" two-line>
+        <v-list-item class="col-3" v-for="item in resumo" :key="item.valor">
+            <v-list-item-avatar>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                        <v-icon class="grey lighten-1 white--text" v-on="on">{{
+                            item.icone
+                        }}</v-icon>
+                    </template>
+                    <span>{{ item.texto }}</span>
+                </v-tooltip>
+            </v-list-item-avatar>
+            <v-list-item-content>
+                <v-list-item-title>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                            <a v-on="on" @click="selecionarTodos(item.valor)"
+                                ><span v-if="tipoSoma">{{
+                                    item.total | int
+                                }}</span
+                                ><span v-else>{{ item.total | moeda }}</span>
+                            </a>
+                        </template>
+                        <span>Total</span>
+                    </v-tooltip>
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                    <v-row>
+                        <v-col>
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">
                                     <a
                                         v-on="on"
-                                        @click="selecionarTodos(item.valor)"
-                                        ><span v-if="tipoSoma">{{
-                                            item.total | int
-                                        }}</span
-                                        ><span v-else>{{
-                                            item.total | moeda
-                                        }}</span>
+                                        class="red--text"
+                                        @click="selecionarEmAtraso(item.valor)"
+                                    >
+                                        <span v-if="tipoSoma">
+                                            {{ item.atraso | int }}
+                                        </span>
+                                        <span v-else="">
+                                            {{ item.atraso | moeda }}
+                                        </span>
                                     </a>
                                 </template>
-                                <span>Total</span>
+                                <span>Em atraso</span>
                             </v-tooltip>
-                        </v-list-item-title>
-                        <v-list-item-subtitle>
-                            <v-row>
-                                <v-col>
-                                    <v-tooltip bottom>
-                                        <template v-slot:activator="{ on }">
-                                            <a
-                                                v-on="on"
-                                                class="red--text"
-                                                @click="
-                                                    selecionarEmAtraso(
-                                                        item.valor
-                                                    )
-                                                "
-                                            >
-                                                <span v-if="tipoSoma">
-                                                    {{ item.atraso | int }}
-                                                </span>
-                                                <span v-else="">
-                                                    {{ item.atraso | moeda }}
-                                                </span>
-                                            </a>
-                                        </template>
-                                        <span>Em atraso</span>
-                                    </v-tooltip>
-                                </v-col>
-                                <v-col>
-                                    <v-tooltip bottom>
-                                        <template v-slot:activator="{ on }">
-                                            <span v-on="on">
-                                                <span v-if="tipoSoma">
-                                                    {{ item.selecionado | int }}
-                                                </span>
-                                                <span v-else="">
-                                                    {{
-                                                        item.selecionado | moeda
-                                                    }}
-                                                </span>
-                                            </span>
-                                        </template>
-                                        <span>Selecionados</span>
-                                    </v-tooltip>
-                                </v-col>
-                            </v-row>
-                        </v-list-item-subtitle>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list>
-        </div>
-    </Fragment>
+                        </v-col>
+                        <v-col>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on }">
+                                    <span v-on="on">
+                                        <span v-if="tipoSoma">
+                                            {{ item.selecionado | int }}
+                                        </span>
+                                        <span v-else="">
+                                            {{ item.selecionado | moeda }}
+                                        </span>
+                                    </span>
+                                </template>
+                                <span>Selecionados</span>
+                            </v-tooltip>
+                        </v-col>
+                    </v-row>
+                </v-list-item-subtitle>
+            </v-list-item-content>
+        </v-list-item>
+    </v-list>
 </template>
 
 <script>
 import groupBy from "lodash/groupBy";
-import { Fragment } from "vue-fragment";
 export default {
     data() {
         return {
@@ -107,7 +82,6 @@ export default {
             resumo: [],
         };
     },
-    components: { Fragment },
     computed: {
         labelSwitch() {
             return this.tipoSoma ? "Quantidade" : "Valor";
@@ -152,8 +126,8 @@ export default {
                           ),
             }));
             resumo.unshift({
-                texto: "Total",
-                icone: "mdi-text-box-plus-outline",
+                texto: "Todos",
+                icone: "mdi-file-document",
                 valor: "total",
                 selecionado: this.tipoSoma
                     ? this.contratos.filter((contrato) => contrato.selecionado)

@@ -2,72 +2,68 @@
     <Fragment>
         <template v-if="!atendimentoIniciado">
             <v-row>
-                <v-col cols="9">
+                <v-col class="pt-0">
                     <ResumoContratos
                         :contratos="contratos"
                         @selecionar-todos="selecionarTodos"
                         @selecionar-em-atraso="selecionarEmAtraso"
                     />
                 </v-col>
-                <v-col class="text-right" cols="3">
-                    <v-row>
-                        <v-col class="col-switch-container">
-                            <label>Ordenação</label>
-                            <v-col class="col-switch">
-                                <v-switch
-                                    hide-details
-                                    label="Valor ↓"
-                                    v-model="ordenacao.valor"
-                                ></v-switch>
-                                <v-switch
-                                    hide-details
-                                    label="Dias em Atraso ↑"
-                                    v-model="ordenacao.atraso"
-                                ></v-switch>
-                            </v-col>
-                        </v-col>
-                    </v-row>
-                    <div>
-                        <v-btn
-                            small
-                            color="teal"
-                            dark
-                            class="mr-1"
-                            @click="selecionarTodos()"
-                        >
-                            <v-icon small class="mr-1">{{
-                                iconeSelecionarTodos
-                            }}</v-icon
-                            >Todos
-                        </v-btn>
-                        <v-btn
-                            small
-                            color="teal"
-                            dark
-                            class="mr-1"
-                            @click="selecionarEmAtraso()"
-                        >
-                            <v-icon small class="mr-1"
-                                >mdi-check-box-outline</v-icon
-                            >Em atraso
-                        </v-btn>
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                    v-on="on"
-                                    small
-                                    color="teal"
-                                    class="mt-2"
-                                    dark
-                                    @click="iniciarAtendimento"
-                                >
-                                    <v-icon small class="mr-1">mdi-play</v-icon
-                                    >Atendimento
-                                </v-btn>
-                            </template>
-                            <span>{{ textoTooltipIniciarAtendimento }}</span>
-                        </v-tooltip>
-                    </div>
+            </v-row>
+            <v-row>
+                <v-col class="pt-0">
+                    <v-btn
+                        small
+                        color="teal"
+                        dark
+                        class="mr-1"
+                        @click="selecionarTodos()"
+                    >
+                        <v-icon small class="mr-1">{{
+                            iconeSelecionarTodos
+                        }}</v-icon
+                        >Todos
+                    </v-btn>
+                    <v-btn
+                        small
+                        color="teal"
+                        dark
+                        class="mr-1"
+                        @click="selecionarEmAtraso()"
+                    >
+                        <v-icon small class="mr-1">mdi-check-box-outline</v-icon
+                        >Em atraso
+                    </v-btn>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                v-on="on"
+                                small
+                                color="teal"
+                                dark
+                                @click="iniciarAtendimento"
+                            >
+                                <v-icon small class="mr-1">mdi-play</v-icon
+                                >Atendimento
+                            </v-btn>
+                        </template>
+                        <span>{{ textoTooltipIniciarAtendimento }}</span>
+                    </v-tooltip>
+                </v-col>
+                <v-col class="col-switch-container text-right">
+                    <label>Ordenação</label>
+                    <v-col class="col-switch">
+                        <v-switch
+                            hide-details
+                            label="Valor ↓"
+                            v-model="ordenacao.valor"
+                        ></v-switch>
+                        <v-switch
+                            hide-details
+                            label="Dias em Atraso ↑"
+                            v-model="ordenacao.atraso"
+                        ></v-switch>
+                    </v-col>
                 </v-col>
             </v-row>
         </template>
