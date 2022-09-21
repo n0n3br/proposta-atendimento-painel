@@ -12,7 +12,7 @@
     "lodash": "4.17.19",
     "vue": "^2.6.11",
     "vue-fragment": "^1.5.1",
-    "vuetify": "2.3.2"
+    "vuetify": "2.6.10"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "4.1.1",
